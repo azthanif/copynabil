@@ -3,10 +3,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LandingPage from './Pages/LandingPage.vue';
 import LoginPage from './Pages/LoginPage.vue'; 
-import AuthenticatedLayout from './layouts/AuthenticatedLayout.vue'; 
+import AuthenticatedLayout from './layouts/AuthenticatedLayout.vue';
 import DashboardOrangTua from './Pages/DashboardOrangTua.vue';
 import JadwalPage from './Pages/JadwalPage.vue';
 import CatatanGuruPage from './Pages/CatatanGuruPage.vue';
+import KelolaSiswaPage from './Pages/Admin/KelolaSiswaPage.vue';
 
 const routes = [
     {
@@ -40,7 +41,20 @@ const routes = [
                 name: 'dashboard.catatan',
                 component: CatatanGuruPage
             }
-]}
+        ]
+    },
+    {
+        path: '/admin',
+        component: AuthenticatedLayout,
+        meta: { requiresAuth: true, requiresAdmin: true },
+        children: [
+            {
+                path: 'siswa',
+                name: 'admin.siswa',
+                component: KelolaSiswaPage
+            }
+        ]
+    }
 ];
 
 const router = createRouter({
@@ -57,7 +71,16 @@ router.beforeEach((to, from, next) => {
         if (!token) {
             next({ name: 'login' });
         } else {
-            // Jika punya, silakan lanjut
+            const needsAdmin = to.matched.some(record => record.meta.requiresAdmin);
+            if (needsAdmin) {
+                const role = localStorage.getItem('userRole');
+                if (role !== 'Admin') {
+                    next({ name: 'dashboard' });
+                    return;
+                }
+            }
+
+            // Jika punya token dan peran sesuai, silakan lanjut
             next();
         }
     } else {

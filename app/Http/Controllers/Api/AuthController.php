@@ -22,7 +22,7 @@ class AuthController extends Controller
         ]);
 
         // 2. Cari user berdasarkan email
-        $user = User::where('email', $request->email)->first();
+        $user = User::with('role')->where('email', $request->email)->first();
 
         // 3. Cek apakah user ada DAN passwordnya cocok
         if (! $user || ! Hash::check($request->password, $user->password)) {
