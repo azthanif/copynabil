@@ -28,17 +28,20 @@
           <div>
             <label class="block text-sm font-medium text-gray-700">NIS</label>
             <input v-model="form.nis" type="text" :class="inputClass" placeholder="TP001" required />
+            <input v-model="form.nis" type="text" class="input" placeholder="TP001" required />
             <p v-if="errors.nis" class="mt-1 text-sm text-red-600">{{ firstError(errors.nis) }}</p>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
             <input v-model="form.nama_lengkap" type="text" :class="inputClass" placeholder="Nama Siswa" required />
+            <input v-model="form.nama_lengkap" type="text" class="input" placeholder="Nama Siswa" required />
             <p v-if="errors.nama_lengkap" class="mt-1 text-sm text-red-600">{{ firstError(errors.nama_lengkap) }}</p>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
               <label class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
               <select v-model="form.jenis_kelamin" :class="inputClass" required>
+              <select v-model="form.jenis_kelamin" class="input" required>
                 <option disabled value="">Pilih</option>
                 <option v-for="gender in genderOptions" :key="gender" :value="gender">{{ gender }}</option>
               </select>
@@ -47,22 +50,26 @@
             <div>
               <label class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
               <input v-model="form.tanggal_lahir" type="date" :class="inputClass" />
+              <input v-model="form.tanggal_lahir" type="date" class="input" />
               <p v-if="errors.tanggal_lahir" class="mt-1 text-sm text-red-600">{{ firstError(errors.tanggal_lahir) }}</p>
             </div>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700">Kelas</label>
             <input v-model="form.kelas" type="text" :class="inputClass" placeholder="Kelas 5" />
+            <input v-model="form.kelas" type="text" class="input" placeholder="Kelas 5" />
             <p v-if="errors.kelas" class="mt-1 text-sm text-red-600">{{ firstError(errors.kelas) }}</p>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700">Alamat</label>
             <textarea v-model="form.alamat" rows="2" :class="inputClass" placeholder="Alamat lengkap"></textarea>
+            <textarea v-model="form.alamat" rows="2" class="input" placeholder="Alamat lengkap"></textarea>
             <p v-if="errors.alamat" class="mt-1 text-sm text-red-600">{{ firstError(errors.alamat) }}</p>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700">Status</label>
             <select v-model="form.status" :class="inputClass" required>
+            <select v-model="form.status" class="input" required>
               <option disabled value="">Pilih</option>
               <option v-for="status in statusOptions" :key="status" :value="status">{{ status }}</option>
             </select>
@@ -78,11 +85,13 @@
               placeholder="Masukkan ID User"
               required
             />
+            <input v-model="form.orang_tua_id" type="number" min="1" class="input" placeholder="Masukkan ID User" required />
             <p v-if="errors.orang_tua_id" class="mt-1 text-sm text-red-600">{{ firstError(errors.orang_tua_id) }}</p>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700">Kontak Orang Tua</label>
             <input v-model="form.kontak_orang_tua" type="text" :class="inputClass" placeholder="Nomor telepon" />
+            <input v-model="form.kontak_orang_tua" type="text" class="input" placeholder="Nomor telepon" />
             <p v-if="errors.kontak_orang_tua" class="mt-1 text-sm text-red-600">{{ firstError(errors.kontak_orang_tua) }}</p>
           </div>
           <div class="flex gap-3">
@@ -339,3 +348,8 @@ onMounted(() => {
 });
 </script>
 
+<style scoped>
+.input {
+  @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500;
+}
+</style>
