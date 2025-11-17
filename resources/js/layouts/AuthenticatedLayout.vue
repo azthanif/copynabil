@@ -56,6 +56,26 @@
             </div>
           </div>
 
+          <div v-if="userRole === 'Admin'">
+            <button @click="toggleMenu('kelolaAdmin')"
+              class="w-full flex justify-between items-center text-left text-gray-600 hover:bg-gray-50 p-2 rounded-lg">
+              <span class="flex items-center">
+                <UserGroupIcon class="w-5 h-5 mr-3" />
+                <span class="font-medium">Kelola Data</span>
+              </span>
+              <ChevronDownIcon :class="menus.kelolaAdmin ? 'rotate-180' : ''" class="w-4 h-4 transition-transform" />
+            </button>
+
+            <div v-if="menus.kelolaAdmin" class="mt-1 pl-6 space-y-1">
+              <router-link to="/admin/siswa"
+                class="flex items-center text-gray-600 hover:text-green-600 p-2 rounded-lg"
+                active-class="bg-green-100 text-[#78AE4E] font-semibold">
+                <DocumentTextIcon class="w-5 h-5 mr-3" />
+                Kelola Siswa
+              </router-link>
+            </div>
+          </div>
+
         </nav>
       </div>
     </aside>
@@ -197,7 +217,8 @@ import {
   BellIcon,
   UserCircleIcon,
   ChevronDownIcon,
-  ExclamationCircleIcon
+  ExclamationCircleIcon,
+  UserGroupIcon
 } from '@heroicons/vue/24/outline';
 
 const isProfileOpen = ref(false);
@@ -208,8 +229,10 @@ const router = useRouter();
 // State untuk mengontrol menu dropdown
 const menus = reactive({
   menuUtama: true, // Default terbuka
-  pengawasan: true // Default terbuka
+  pengawasan: true, // Default terbuka
+  kelolaAdmin: true
 });
+const userRole = ref(localStorage.getItem('userRole') || '');
 
 const handleClickOutside = (event) => {
   if (profileMenu.value && !profileMenu.value.contains(event.target)) {
@@ -248,6 +271,7 @@ const handleLogout = async () => {
   } finally {
     localStorage.removeItem('token');
     delete axios.defaults.headers.common['Authorization'];
+    localStorage.removeItem('userRole');
     router.push('/login');
   }
 };

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\DashboardOrangTuaController; // <--- Pastikan di-import
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BeritaController;
+use App\Http\Controllers\Api\SiswaController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,4 +32,12 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::get('/catatan-guru-lengkap', [DashboardOrangTuaController::class, 'getAllCatatan']);
     Route::get('/jadwal-lengkap', [DashboardOrangTuaController::class, 'getAllJadwal']); // <--- INI YANG PENTING
+
+    Route::middleware('role:Admin')->prefix('admin')->group(function () {
+        Route::get('/siswa', [SiswaController::class, 'index']);
+        Route::post('/siswa', [SiswaController::class, 'store']);
+        Route::get('/siswa/{siswa}', [SiswaController::class, 'show']);
+        Route::put('/siswa/{siswa}', [SiswaController::class, 'update']);
+        Route::delete('/siswa/{siswa}', [SiswaController::class, 'destroy']);
+    });
 });
