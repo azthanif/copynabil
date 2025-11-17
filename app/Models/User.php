@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -43,5 +44,10 @@ class User extends Authenticatable
     public function berita(): HasMany
     {
         return $this->hasMany(Berita::class, 'penulis_id');
+    }
+
+    public function anak(): HasOne
+    {
+        return $this->hasOne(Siswa::class, 'orang_tua_id');
     }
 }

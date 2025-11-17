@@ -110,11 +110,13 @@ const handleLogin = async () => {
       password: form.password
     });
 
-    // 2. Ambil token dari response server
+    // 2. Ambil token dan peran dari response server
     const token = response.data.access_token;
+    const userRole = response.data.user?.role?.nama_role || '';
 
     // 3. SIMPAN token ke localStorage (PENTING!)
     localStorage.setItem('token', token);
+    localStorage.setItem('userRole', userRole);
 
     // 4. Set default header Axios agar request berikutnya membawa token ini
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
